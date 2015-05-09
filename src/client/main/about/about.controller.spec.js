@@ -7,7 +7,7 @@ describe('fsAboutController', function()
 
   beforeEach(function()
   {
-    module('main.about');
+    module('main.about', 'main/about/about.directive.html');
   });
 
   beforeEach(function()
@@ -16,7 +16,7 @@ describe('fsAboutController', function()
       {
         scope = _$rootScope_.$new();
         $httpBackend = _$httpBackend_;
-		    var APIURL = 'http://'+window.location.hostname+':2146/api/calories';
+		    var APIURL = 'http://'+window.location.hostname+':2146/api/abouttext';
         $httpBackend.expectGET(APIURL);
         $httpBackend.whenGET(APIURL).respond([
             {
