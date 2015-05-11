@@ -1,0 +1,1 @@
+This is a starter application so you can quickly get started building Angular 1.x applications.

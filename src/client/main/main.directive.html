@@ -1,0 +1,10 @@
+<h1>Main</h1>
+<ul class="nav nav-tabs">
+	<li role="presentation" 
+		ng-class="{active: vm.basicEnabled}"
+		data-toggle="{{vm.basicTab}}"><a ui-sref="basic">Basic</a></li>
+	<li role="presentation" 
+		ng-class="{active: vm.aboutEnabled}"
+		data-toggle="{{vm.aboutTab}}"><a ui-sref="about">About</a></li>
+</ul>
+<div ng-transclude></div>
