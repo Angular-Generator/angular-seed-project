@@ -30,6 +30,7 @@
     "gulp-eslint": "^0.9.0",
     "gulp-inject": "^1.2.0",
     "gulp-istanbul": "^0.8.1",
+    "gulp-jade": "^1.0.1",
     "gulp-jscs": "^1.6.0",
     "gulp-jshint": "^1.10.0",
     "gulp-merge": "^0.1.0",

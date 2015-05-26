@@ -21,7 +21,7 @@ var config = {
     lessFiles:  {'build/fireStarter.css': 'src/client/fireStarter.less'},
     buildDirectory:  'build',
     coverageDirectory: 'coverage',
-    sourceIndexFile: 'src/client/index.html',
+    sourceIndexFile: 'build/index.html',
     buildIndexFile: 'build/index.html',
     injectorFiles: {
                     'build/index.html': ['src/client/*.js',
@@ -67,8 +67,8 @@ var config = {
             'src/client/**/*.js',
             'src/client/*.spec.js', 
             'src/client/**/*.spec.js',
-            'src/client/*.directive.html',
-            'src/client/**/*.directive.html']
+            'build/*.directive.html',
+            'build/**/*.directive.html']
   },
 
   staticServer: {

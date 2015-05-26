@@ -1,0 +1,38 @@
+doctype html(lang='en')
+head
+    meta(charset='utf-8')
+
+    title Angular 1 Starter Application
+
+    meta(name='description', content='Starter application for Angular.')
+    meta(name='viewport', content='width=device-width')
+    // Place favicon.ico and apple-touch-icon.png in the root directory
+    // bower:css
+    // endbower
+    // injector:css
+    // endinjector
+    base(href='/')
+body(ng-app='fireStarter', style='padding-top: 10px;')
+    //if lt IE 8
+      p.browsehappy
+        | You are using an 
+        strong outdated
+        |  browser. Please 
+        a(href='http://browsehappy.com/') upgrade your browser
+        |  to improve your experience.
+    // Add your site or application content here
+    .container
+        fs-main
+            div(ui-view='')
+    //if lt IE 9
+      script(src='../../bower_components/es5-shim/es5-shim.js')
+      script(src='../../bower_components/json3/lib/json3.min.js')
+    // bower:js
+    // endbower
+    // injector:js
+    // endinjector
+    // inject:js
+    // endinject
+    script#__bs_script__(type='text/javascript').
+      document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.6.4.js'><script>".replace("HOST", location.hostname));
+    b Sup

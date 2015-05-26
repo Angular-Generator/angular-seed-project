@@ -9,6 +9,7 @@ var buffer              = require('vinyl-buffer');
 var wiredep             = require('wiredep').stream;
 var inject              = require('gulp-inject');
 var nodemon             = require('gulp-nodemon');
+var jade                = require('gulp-jade');
 var jshint              = require('gulp-jshint');
 var jscs                = require('gulp-jscs');
 var complexity          = require('gulp-complexity');
@@ -25,6 +26,7 @@ var istanbul            = require('gulp-istanbul');
 var merge               = require('gulp-merge');
 
 var CONFIG              = require('./build.config');
+
 
 gulp.task('hello', function()
 {
@@ -204,7 +206,7 @@ gulp.task('cow', function()
 });
 
 // copies all the files you need for a dev build. Missing prod for now.
-gulp.task('copy', ['clean'], function()
+gulp.task('copy', ['clean', 'templates'], function()
 {
     // NOTE: doesn't work, task never completes, I give up.
     // All streams above work fine if you return individually,
@@ -213,7 +215,7 @@ gulp.task('copy', ['clean'], function()
     
     return new Promise(function(resolve, reject)
     {
-        gulp.src('src/client/index.html')
+        gulp.src('build/index.html')
         .pipe(wiredep({ignorePath: "../../"}))
         .pipe(gulp.dest('./build'))
         .on('end', resolve)
@@ -247,7 +249,7 @@ gulp.task('copy', ['clean'], function()
 });
 
 // injects all your files into index.html
-gulp.task('inject', ['copy'], function()
+gulp.task('inject', ['templates', 'copy'], function()
 {
 	var sources = gulp.src(CONFIG.client.sourceFiles, {read: false});
 	return gulp.src('./build/index.html')
@@ -263,6 +265,12 @@ gulp.task('browserSync', function(done)
 		baseDir: 'build/index.html'
 	});
 	done();
+});
+
+gulp.task('templates', function() {
+  gulp.src('src/client/*{,*/*}.jade')
+    .pipe(jade({}))
+    .pipe(gulp.dest('./build'))
 });
 
 // watch doesn't work, I gave up

@@ -1,0 +1,7 @@
+h1 Main
+ul.nav.nav-tabs
+	li(role='presentation', ng-class='{active: vm.basicEnabled}', data-toggle='{{vm.basicTab}}')
+		a(ui-sref='basic') Basic
+	li(role='presentation', ng-class='{active: vm.aboutEnabled}', data-toggle='{{vm.aboutTab}}')
+		a(ui-sref='about') About
+div(ng-transclude='')
