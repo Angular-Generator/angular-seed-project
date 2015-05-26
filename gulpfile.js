@@ -268,9 +268,11 @@ gulp.task('browserSync', function(done)
 });
 
 gulp.task('templates', function() {
-  gulp.src('src/client/*{,*/*}.jade')
-    .pipe(jade({}))
-    .pipe(gulp.dest('./build'))
+  return gulp.src('src/client/*{,*/*}.jade')
+    .pipe(jade({
+        pretty: true
+    }))
+    .pipe(gulp.dest('./build'));
 });
 
 // watch doesn't work, I gave up
@@ -298,7 +300,7 @@ gulp.task('start', function (done)
 	    ext: 'js html',
         ignore: ['Gruntfile.js', 'gulpfile.js', 'node_modules', 'bower_components'],
 	  	env: { 'NODE_ENV': 'development' },
-        tasks: ['clean', 'copy', 'inject']
+        tasks: ['clean', 'templates', 'copy', 'inject']
   	});
   done();
 });
@@ -306,6 +308,7 @@ gulp.task('start', function (done)
 // git-r-done
 gulp.task('default', [
 	'clean', 
+    'templates',
 	'copy', 
 	'inject', 
 	'browserSync', 
