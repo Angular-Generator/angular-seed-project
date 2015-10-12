@@ -1,5 +1,5 @@
 var gulp                = require('gulp');
-var browserSync         = require('browser-sync');
+var browserSync         = require('browser-sync').create();
 var del                 = require('del');
 var vinylPaths          = require('vinyl-paths');
 var typescript          = require('gulp-typescript');
@@ -156,11 +156,6 @@ gulp.task('copy', ['clean'], function()
             .on('end', resolve)
             .on('error', reject);
         });
-    })
-    .then(function()
-    {
-        // NOTE: this guy, even in stream mode, breaks, so putting here.
-        browserSync.reload();
     });
 });
 
@@ -176,13 +171,15 @@ gulp.task('inject', ['copy'], function()
 	.pipe(browserSync.reload({stream: true}));
 });
 
-// refreshes the webpage
-gulp.task('browserSync', function(done)
-{
-	browserSync({
-		baseDir: 'build/index.html'
-	});
-	done();
+gulp.task('browserSync', function()
+{	
+	browserSync.init({
+        proxy: "http://localhost:" + CONFIG.staticServer.port
+    });
+    gulp.watch(["src/client/*.js",
+    			"src/client/*.html",
+    			"src/client/**/*.js",
+    			"src/client/**/*.html"], ['inject']);
 });
 
 // watch doesn't work, I gave up
@@ -228,9 +225,5 @@ gulp.task('start', function (done)
 
 // git-r-done
 gulp.task('default', [
-	'clean', 
-	'copy', 
-	'inject',
-	'openIndex', 
-	'browserSync'
+	'inject', 'browserSync'
 ]);

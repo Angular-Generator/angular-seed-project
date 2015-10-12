@@ -34,10 +34,12 @@ api.get('/api/abouttext', function(req, res, next)
 {
   if(redis.get("abouttext"))
   {
+  	console.log("/api/abouttext::sending cached data");
     res.send(200, {response: true, data: redis.get("abouttext")});
   }
   else
   {
+  	console.log("/api/abouttext::sending raw data and caching it");
     var fs = require('fs');
     fs.readFile(__dirname + '/about.txt', 'utf8', function(err, data) {
       if (err)
