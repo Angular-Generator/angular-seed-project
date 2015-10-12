@@ -5,7 +5,7 @@ var path = require('path');
 var pkg = require(path.resolve('./package.json'));
 var express = require('express');
 var favicon = require('serve-favicon');
-// var api = require('../api/testapi'); // Runs restify api in tandem
+var api = require('../api/testapi'); // Runs restify api in tandem
 var app = express();
 
 
