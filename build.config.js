@@ -6,6 +6,12 @@ var config = {
 
   buildFilesAndDirectoriesToClean: ['build', 'coverage', 'reports'],
 
+  complexity: {
+  	cyclomatic: 20,
+    halstead: 20,
+    maintainability: 100
+  },
+
   client: {
     baseDirectory: 'src/client',
     sourceFiles:     ['*.module.js',

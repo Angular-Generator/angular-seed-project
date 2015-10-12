@@ -50,11 +50,7 @@ gulp.task('analyze', function() {
     {
     	console.warn('jscs failed');
     })
-    .pipe(complexity({
-        	cyclomatic: [3, 7, 12],
-            halstead: [8, 13, 20],
-            maintainability: 100
-        })
+    .pipe(complexity(CONFIG.complexity)
     )
     .on('error', function(e)
     {
@@ -78,11 +74,7 @@ gulp.task('analyzeWhileIFix', function()
     {
         this.emit('end');
     })
-    .pipe(complexity({
-            cyclomatic: [3, 7, 12],
-            halstead: [8, 13, 20],
-            maintainability: 100
-        })
+    .pipe(complexity(CONFIG.complexity)
     )
     .on('error', function(e)
     {
