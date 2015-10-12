@@ -38,6 +38,7 @@
     "gulp-open": "^0.3.2",
     "gulp-sequence": "^0.3.2",
     "gulp-typescript": "^2.5.0",
+    "gulp-util": "^3.0.6",
     "istanbul": "^0.3.8",
     "jit-grunt": "^0.8.0",
     "js-yaml": "^3.2.2",

@@ -23,13 +23,28 @@ var open                = require('gulp-open');
 var istanbul            = require('gulp-istanbul');
 var Promise          = require('Bluebird');
 var merge               = require('gulp-merge');
+var gutil = require('gulp-util');
 
 var CONFIG              = require('./build.config');
+var BUILD_TYPE_DEVELOPMENT = "development";
+var BUILD_TYPE_PRODUCTION = "production";
+var BUILD_TYPE 			= BUILD_TYPE_DEVELOPMENT;
 
 gulp.task('hello', function()
 {
 	console.log('Waaazzuuuuuppp');
 });
+
+function onBuildError(reason)
+{
+	gutil.log(reason);
+	process.exit(1);
+}
+
+function onBuildWarning(reason)
+{
+	gutil.log(reason);
+}
 
 // tells you everything wrong with your code, quickly. Format, styling, and complexity.
 gulp.task('analyze', function() {
@@ -39,23 +54,23 @@ gulp.task('analyze', function() {
     .pipe(jshint.reporter('fail'))
     .on('error', function(e)
     {
-    	console.warn('jshint failed.');
+    	onBuildWarning('jshint failed.');
     })
     .pipe(jscs())
     .on('error', function(e)
     {
-    	console.warn('jscs failed');
+    	onBuildWarning('jscs failed');
     })
     .pipe(complexity(CONFIG.complexity)
     )
     .on('error', function(e)
     {
-    	console.warn('complexity failed');
+    	onBuildWarning('complexity failed');
     });
 });
 
 // Like analyze, but stops if something doesn't pass a quality gate.
-gulp.task('analyzeWhileIFix', function()
+gulp.task('analyzeStrict', function()
 {
     return gulp.src(CONFIG.client.sourceFiles)
     .pipe(jshint())
@@ -63,18 +78,18 @@ gulp.task('analyzeWhileIFix', function()
     .pipe(jshint.reporter('fail'))
     .on('error', function(e)
     {
-        this.emit('end');
+    	onBuildError('jshint failed.');
     })
     .pipe(jscs())
     .on('error', function(e)
     {
-        this.emit('end');
+    	onBuildError('jscs failed');
     })
     .pipe(complexity(CONFIG.complexity)
     )
     .on('error', function(e)
     {
-       this.emit('end');
+    	onBuildError('complexity failed');
     });
 });
 
@@ -179,25 +194,8 @@ gulp.task('browserSync', function()
     gulp.watch(["src/client/*.js",
     			"src/client/*.html",
     			"src/client/**/*.js",
-    			"src/client/**/*.html"], ['inject']);
+    			"src/client/**/*.html"], ['analyze', 'inject']);
 });
-
-// watch doesn't work, I gave up
-// gulp.task('watch', function(done)
-// {
-// 	gulp.watch([
-//         'src/client/*.html', 
-//         'src/client/*.js', 
-//         'src/client/**/*.js',
-//         'src/client/**/*.html'], 
-//         {read: false},
-//         ['clean', 'copy', 'inject'])
-//     .on('change', function(sup)
-//     {
-//         console.log
-//     });
-//     done();
-// });
 
 gulp.task('openIndex', function(done)
 {
