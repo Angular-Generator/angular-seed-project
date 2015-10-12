@@ -168,9 +168,7 @@ gulp.task('copy', ['clean'], function()
 gulp.task('inject', ['copy'], function()
 {
 	var wiredepSources = require('wiredep')();
-	console.log("wiredepSources.css:", wiredepSources);
 	var both = CONFIG.client.sourceFiles.concat(wiredepSources.css);
-	console.log("both:", both);
 	var sources = gulp.src(both, {read: false});
 	return gulp.src('./build/index.html')
 	.pipe(inject(sources, {ignorePath: '/src/client/'}))
