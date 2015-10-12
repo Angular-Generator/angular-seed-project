@@ -1,10 +1,11 @@
 console.log('Loading express server...');
 
+var CONFIG = require('../../build.config');
 var path = require('path');
 var pkg = require(path.resolve('./package.json'));
 var express = require('express');
 var favicon = require('serve-favicon');
-var api = require('../api/testapi'); // Runs restify api in tandem
+// var api = require('../api/testapi'); // Runs restify api in tandem
 var app = express();
 
 
@@ -24,19 +25,15 @@ app.get('/', function(req, res)
 	res.sendFile('/build/index.html');
 });
 
-//As a fallback, any route that would otherwise throw a 404 (Not Found) will be given to the
-//home page, which will try to decompose the route and use the correct client-side route.
 app.use(function(req, res, next)
 {
 	console.log("app::use fallback");
     console.log('Falling back to build/index.html instead of ' + req.url);
     req.url = 'build/index.html';
-    // next();
 });
 
 
-var port = 8628;
-app.listen(port, function()
+app.listen(CONFIG.staticServer.port, function()
 {
-    console.log('Demo server started on port ' + port);
+    console.log('Demo server started on port ' + CONFIG.staticServer.port);
 });
