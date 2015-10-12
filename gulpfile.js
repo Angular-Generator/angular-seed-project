@@ -167,7 +167,11 @@ gulp.task('copy', ['clean'], function()
 // injects all your files into index.html
 gulp.task('inject', ['copy'], function()
 {
-	var sources = gulp.src(CONFIG.client.sourceFiles, {read: false});
+	var wiredepSources = require('wiredep')();
+	console.log("wiredepSources.css:", wiredepSources);
+	var both = CONFIG.client.sourceFiles.concat(wiredepSources.css);
+	console.log("both:", both);
+	var sources = gulp.src(both, {read: false});
 	return gulp.src('./build/index.html')
 	.pipe(inject(sources, {ignorePath: '/src/client/'}))
 	.pipe(gulp.dest('./build'))
